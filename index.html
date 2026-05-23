@@ -7,7 +7,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Vault">
 <title>Vault</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -19,457 +18,229 @@
     --accent2: #ff6b35;
     --text: #f0f0f0;
     --muted: #666;
-    --card-h: 200px;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  body {
+  html, body {
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+    height: 100%;
     overflow-x: hidden;
   }
-
-  /* ── HEADER ── */
   header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: env(safe-area-inset-top, 0) 20px 0;
-    background: linear-gradient(to bottom, var(--bg) 80%, transparent);
+    position: sticky; top: 0; z-index: 100;
+    padding: env(safe-area-inset-top, 16px) 20px 0;
+    background: var(--bg);
   }
-
   .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0 12px;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
   }
-
   .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.5px;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-
   .header-actions { display: flex; gap: 10px; }
-
   .icon-btn {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 18px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    font-size: 18px;
-    transition: all .15s;
   }
-  .icon-btn:active { transform: scale(0.92); background: var(--surface2); }
-
-  /* ── TABS ── */
   .tabs {
-    display: flex;
-    gap: 6px;
-    padding: 12px 20px 0;
-    overflow-x: auto;
-    scrollbar-width: none;
+    display: flex; gap: 6px; padding: 12px 0 0;
+    overflow-x: auto; scrollbar-width: none;
   }
   .tabs::-webkit-scrollbar { display: none; }
-
   .tab {
-    white-space: nowrap;
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all .15s;
+    white-space: nowrap; padding: 7px 16px; border-radius: 20px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-size: 13px; font-weight: 500; cursor: pointer;
   }
-  .tab.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
+  .tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+  main { padding: 16px 20px 120px; }
+  .stats-bar { display: flex; gap: 20px; padding: 12px 0 4px; }
+  .stat-n {
+    font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .tab:active { transform: scale(0.95); }
-
-  /* ── MAIN ── */
-  main {
-    padding: 16px 20px 120px;
+  .stat-l { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .search-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; margin: 12px 0;
   }
-
+  .search-bar input {
+    background: none; border: none; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; flex: 1;
+  }
+  .search-bar input::placeholder { color: var(--muted); }
   .section-label {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 14px;
-    margin-top: 24px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 14px; margin-top: 8px;
   }
-
-  /* ── CARDS ── */
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .card {
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
-    position: relative;
-    animation: fadeUp .3s ease both;
+    border-radius: 16px; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    cursor: pointer; position: relative;
   }
-  .card:active { transform: scale(0.97); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
   .card-thumb {
-    width: 100%;
-    aspect-ratio: 9/14;
-    background: var(--surface2);
-    position: relative;
-    overflow: hidden;
+    width: 100%; aspect-ratio: 9/14;
+    background: var(--surface2); position: relative; overflow: hidden;
   }
-
-  .card-thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
   .thumb-placeholder {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a1a1a, #222);
-    font-size: 32px;
+    background: linear-gradient(135deg, #1a1a1a, #222); font-size: 32px;
   }
-
   .card-play {
-    position: absolute;
-    bottom: 8px; right: 8px;
-    width: 32px; height: 32px;
-    border-radius: 50%;
+    position: absolute; bottom: 8px; right: 8px;
+    width: 32px; height: 32px; border-radius: 50%;
     background: rgba(255,45,85,0.9);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 12px;
   }
-
   .card-delete {
-    position: absolute;
-    top: 8px; right: 8px;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.7);
-    border: none;
-    color: white;
-    display: none;
-    align-items: center; justify-content: center;
-    font-size: 14px;
-    cursor: pointer;
-    z-index: 2;
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0,0,0,0.75); border: none; color: white;
+    font-size: 14px; cursor: pointer; z-index: 2;
+    display: none; align-items: center; justify-content: center;
   }
   .edit-mode .card-delete { display: flex; }
-
-  .card-info {
-    padding: 10px 10px 12px;
-  }
-
+  .card-info { padding: 10px 10px 12px; }
   .card-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
   }
-
   .card-meta {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    font-size: 11px; color: var(--muted); margin-top: 5px;
+    display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
   }
-
-  /* ── PLAYLIST BADGE ── */
   .playlist-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 10px;
-    font-weight: 600;
-    background: var(--surface2);
-    color: var(--muted);
-    border: 1px solid var(--border);
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 600;
+    background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
   }
-
-  /* ── EMPTY STATE ── */
-  .empty {
-    text-align: center;
-    padding: 60px 20px;
-    animation: fadeUp .4s ease;
-  }
+  .empty { text-align: center; padding: 60px 20px; }
   .empty-icon { font-size: 48px; margin-bottom: 16px; }
-  .empty-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
+  .empty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .empty-sub { color: var(--muted); font-size: 14px; line-height: 1.6; }
-
-  /* ── FAB ── */
+  /* FAB */
   .fab {
     position: fixed;
     bottom: calc(28px + env(safe-area-inset-bottom, 0px));
-    right: 24px;
-    z-index: 200;
-    width: 58px; height: 58px;
-    border-radius: 50%;
+    right: 24px; z-index: 200;
+    width: 60px; height: 60px; border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border: none;
-    color: white;
-    font-size: 26px;
+    border: none; color: white; font-size: 28px;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(255,45,85,0.4);
-    transition: transform .15s, box-shadow .15s;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(255,45,85,0.4);
+    -webkit-appearance: none;
   }
-  .fab:active { transform: scale(0.92); box-shadow: 0 4px 12px rgba(255,45,85,0.3); }
-
-  /* ── MODAL ── */
+  /* OVERLAY — clé du fix iOS */
   .overlay {
-    position: fixed; inset: 0;
+    position: fixed; inset: 0; z-index: 300;
     background: rgba(0,0,0,0.7);
-    z-index: 300;
-    display: none;
-    align-items: flex-end;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
+    display: flex; align-items: flex-end;
+    visibility: hidden; opacity: 0;
+    transition: opacity 0.25s, visibility 0.25s;
   }
-  .overlay.open { display: flex; }
-
+  .overlay.open { visibility: visible; opacity: 1; }
   .sheet {
-    width: 100%;
-    background: var(--surface);
+    width: 100%; background: var(--surface);
     border-radius: 24px 24px 0 0;
-    padding: 20px 24px calc(32px + env(safe-area-inset-bottom, 0px));
-    animation: slideUp .25s ease;
+    padding: 20px 24px;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    max-height: 90vh; overflow-y: auto;
   }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
-
+  .overlay.open .sheet { transform: translateY(0); }
   .sheet-handle {
-    width: 36px; height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    margin: 0 auto 20px;
+    width: 36px; height: 4px; background: var(--border);
+    border-radius: 2px; margin: 0 auto 20px;
   }
-
-  .sheet-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
+  .sheet-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 20px; }
   .input-group { margin-bottom: 14px; }
-  .input-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 6px;
-    display: block;
-  }
-
+  .input-label { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 6px; display: block; }
   .input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 13px 16px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    outline: none;
-    transition: border-color .15s;
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 13px 16px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
+    -webkit-appearance: none; appearance: none;
   }
   .input:focus { border-color: var(--accent); }
   .input::placeholder { color: var(--muted); }
-
-  .playlist-select {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 6px;
-  }
+  .playlist-select { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
   .pl-chip {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all .15s;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-size: 13px; cursor: pointer;
+    -webkit-appearance: none;
   }
   .pl-chip.selected { background: var(--accent); border-color: var(--accent); color: white; }
-
   .btn-primary {
-    width: 100%;
-    padding: 15px;
-    border-radius: 14px;
+    width: 100%; padding: 15px; border-radius: 14px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border: none;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: opacity .15s;
+    border: none; color: white;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; margin-top: 8px; -webkit-appearance: none;
   }
-  .btn-primary:active { opacity: 0.85; }
-
-  /* ── PLAYLIST MODAL ── */
-  .new-pl-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
+  .new-pl-row { display: flex; gap: 10px; margin-bottom: 16px; }
   .new-pl-row .input { flex: 1; }
   .btn-small {
-    padding: 13px 16px;
-    border-radius: 12px;
-    background: var(--accent);
-    border: none;
-    color: white;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
+    padding: 13px 16px; border-radius: 12px;
+    background: var(--accent); border: none; color: white;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; -webkit-appearance: none;
   }
-
   .pl-list { display: flex; flex-direction: column; gap: 8px; }
   .pl-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    background: var(--surface2);
-    border-radius: 12px;
-    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; background: var(--surface2);
+    border-radius: 12px; border: 1px solid var(--border);
   }
   .pl-item-name { font-size: 14px; font-weight: 500; }
   .pl-item-count { font-size: 12px; color: var(--muted); }
-  .pl-del { background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer; padding: 4px; }
-
-  /* ── TOAST ── */
+  .pl-del { background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer; padding: 4px 8px; }
   .toast {
     position: fixed;
     bottom: calc(100px + env(safe-area-inset-bottom, 0px));
     left: 50%; transform: translateX(-50%);
-    background: #222;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    z-index: 500;
-    opacity: 0;
-    transition: opacity .2s;
-    pointer-events: none;
-    white-space: nowrap;
+    background: #222; border: 1px solid var(--border);
+    color: var(--text); padding: 10px 20px;
+    border-radius: 20px; font-size: 13px; font-weight: 500;
+    z-index: 500; opacity: 0; pointer-events: none;
+    transition: opacity .2s; white-space: nowrap;
   }
   .toast.show { opacity: 1; }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: flex;
-    gap: 16px;
-    padding: 12px 0 0;
-    margin-bottom: 4px;
-  }
-  .stat { text-align: center; }
-  .stat-n {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .stat-l { font-size: 11px; color: var(--muted); margin-top: 1px; }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    gap: 10px;
-    margin: 12px 0 0;
-  }
-  .search-bar input {
-    background: none;
-    border: none;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    outline: none;
-    flex: 1;
-  }
-  .search-bar input::placeholder { color: var(--muted); }
-  .search-icon { color: var(--muted); font-size: 16px; }
 </style>
 </head>
 <body>
-
+ 
 <header>
   <div class="header-inner">
     <span class="logo">VAULT</span>
     <div class="header-actions">
-      <button class="icon-btn" id="editBtn" title="Éditer">✏️</button>
-      <button class="icon-btn" id="playlistBtn" title="Playlists">📂</button>
+      <button class="icon-btn" id="editBtn">✏️</button>
+      <button class="icon-btn" id="playlistBtn">📂</button>
     </div>
   </div>
-  <div class="tabs" id="tabs">
-    <button class="tab active" data-pl="all">Tout</button>
-  </div>
+  <div class="tabs" id="tabs"></div>
 </header>
-
+ 
 <main id="main"></main>
-
+ 
 <button class="fab" id="fab">+</button>
-
+ 
 <!-- MODAL AJOUT -->
 <div class="overlay" id="addOverlay">
   <div class="sheet">
@@ -477,11 +248,11 @@
     <div class="sheet-title">Ajouter une vidéo</div>
     <div class="input-group">
       <label class="input-label">Lien TikTok</label>
-      <input class="input" id="linkInput" type="url" placeholder="https://www.tiktok.com/...">
+      <input class="input" id="linkInput" type="url" placeholder="https://www.tiktok.com/..." autocomplete="off" autocorrect="off" autocapitalize="off">
     </div>
     <div class="input-group">
       <label class="input-label">Titre (optionnel)</label>
-      <input class="input" id="titleInput" type="text" placeholder="Nom de la vidéo...">
+      <input class="input" id="titleInput" type="text" placeholder="Nom de la vidéo..." autocomplete="off">
     </div>
     <div class="input-group">
       <label class="input-label">Playlist</label>
@@ -490,73 +261,75 @@
     <button class="btn-primary" id="saveBtn">Sauvegarder</button>
   </div>
 </div>
-
+ 
 <!-- MODAL PLAYLISTS -->
 <div class="overlay" id="plOverlay">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">Mes playlists</div>
     <div class="new-pl-row">
-      <input class="input" id="newPlInput" placeholder="Nouvelle playlist...">
+      <input class="input" id="newPlInput" placeholder="Nouvelle playlist..." autocomplete="off">
       <button class="btn-small" id="addPlBtn">Créer</button>
     </div>
     <div class="pl-list" id="plList"></div>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script>
-// ── STATE ──
 let videos = JSON.parse(localStorage.getItem('vault_videos') || '[]');
 let playlists = JSON.parse(localStorage.getItem('vault_playlists') || '["Favoris","Inspiration","Drôle"]');
 let activeTab = 'all';
 let editMode = false;
 let selectedPl = null;
-
-// ── STORAGE ──
+ 
 const save = () => {
   localStorage.setItem('vault_videos', JSON.stringify(videos));
   localStorage.setItem('vault_playlists', JSON.stringify(playlists));
 };
-
-// ── TOAST ──
+ 
 const showToast = (msg) => {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 };
-
-// ── THUMBNAIL ──
-const getTikTokId = (url) => {
-  const m = url.match(/\/video\/(\d+)/);
-  return m ? m[1] : null;
-};
-
+ 
 const getEmoji = (url) => {
-  const emojis = ['🎵','🔥','😂','✨','🎬','💯','🎤','👀','🌊','⚡'];
+  const emojis = ['🎵','🔥','😂','✨','🎬','💯','🎤','👀','🌊','⚡','🎯','💥'];
   let hash = 0;
   for (let c of url) hash = (hash * 31 + c.charCodeAt(0)) & 0xffff;
   return emojis[hash % emojis.length];
 };
-
-// ── RENDER ──
+ 
+const openOverlay = (id) => {
+  document.getElementById(id).classList.add('open');
+};
+const closeOverlay = (id) => {
+  document.getElementById(id).classList.remove('open');
+};
+ 
 const render = () => {
-  // tabs
   const tabsEl = document.getElementById('tabs');
-  tabsEl.innerHTML = `<button class="tab ${activeTab==='all'?'active':''}" data-pl="all">Tout</button>`;
+  tabsEl.innerHTML = '';
+  const allTab = document.createElement('button');
+  allTab.className = 'tab' + (activeTab === 'all' ? ' active' : '');
+  allTab.textContent = 'Tout';
+  allTab.onclick = () => { activeTab = 'all'; render(); };
+  tabsEl.appendChild(allTab);
+ 
   playlists.forEach(pl => {
-    tabsEl.innerHTML += `<button class="tab ${activeTab===pl?'active':''}" data-pl="${pl}">${pl}</button>`;
+    const t = document.createElement('button');
+    t.className = 'tab' + (activeTab === pl ? ' active' : '');
+    t.textContent = pl;
+    t.onclick = () => { activeTab = pl; render(); };
+    tabsEl.appendChild(t);
   });
-  tabsEl.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => { activeTab = t.dataset.pl; render(); });
-  });
-
-  // filter
+ 
   const filtered = activeTab === 'all' ? videos : videos.filter(v => v.playlist === activeTab);
   const main = document.getElementById('main');
-
+ 
   if (filtered.length === 0) {
     main.innerHTML = `
       <div class="stats-bar">
@@ -566,25 +339,28 @@ const render = () => {
       <div class="empty">
         <div class="empty-icon">🎬</div>
         <div class="empty-title">Rien ici</div>
-        <div class="empty-sub">Appuie sur <strong>+</strong> pour ajouter<br>ton premier TikTok</div>
+        <div class="empty-sub">Appuie sur <strong>+</strong> pour ajouter ton premier TikTok</div>
       </div>`;
     return;
   }
-
-  let html = `<div class="stats-bar">
-    <div class="stat"><div class="stat-n">${filtered.length}</div><div class="stat-l">vidéos</div></div>
-    <div class="stat"><div class="stat-n">${playlists.length}</div><div class="stat-l">playlists</div></div>
-  </div>
-  <div class="search-bar"><span class="search-icon">🔍</span><input id="searchInput" placeholder="Rechercher..."></div>
-  <p class="section-label" style="margin-top:20px">${activeTab==='all'?'Toutes les vidéos':activeTab}</p>
-  <div class="grid ${editMode?'edit-mode':'}" id="grid">`;
-
-  filtered.forEach((v, i) => {
-    const emoji = getEmoji(v.url);
-    html += `
-    <div class="card" data-id="${v.id}" style="animation-delay:${i*0.04}s">
+ 
+  main.innerHTML = `
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-n">${filtered.length}</div><div class="stat-l">vidéos</div></div>
+      <div class="stat"><div class="stat-n">${playlists.length}</div><div class="stat-l">playlists</div></div>
+    </div>
+    <div class="search-bar"><span>🔍</span><input id="searchInput" placeholder="Rechercher..." autocomplete="off"></div>
+    <p class="section-label">${activeTab === 'all' ? 'Toutes les vidéos' : activeTab}</p>
+    <div class="grid ${editMode ? 'edit-mode' : ''}" id="grid"></div>`;
+ 
+  const grid = document.getElementById('grid');
+  filtered.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.id = v.id;
+    card.innerHTML = `
       <div class="card-thumb">
-        <div class="thumb-placeholder">${emoji}</div>
+        <div class="thumb-placeholder">${getEmoji(v.url)}</div>
         <div class="card-play">▶</div>
         <button class="card-delete" data-id="${v.id}">✕</button>
       </div>
@@ -594,111 +370,97 @@ const render = () => {
           ${v.playlist ? `<span class="playlist-badge">${v.playlist}</span>` : ''}
           <span style="font-size:10px;color:var(--muted)">${new Date(v.date).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>
         </div>
-      </div>
-    </div>`;
-  });
-
-  html += `</div>`;
-  main.innerHTML = html;
-
-  // events
-  main.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      if (e.target.classList.contains('card-delete')) return;
-      if (editMode) return;
-      const id = card.dataset.id;
-      const v = videos.find(x => x.id === id);
-      if (v) window.open(v.url, '_blank');
-    });
-  });
-
-  main.querySelectorAll('.card-delete').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+      </div>`;
+    card.querySelector('.card-delete').addEventListener('click', (e) => {
       e.stopPropagation();
-      const id = btn.dataset.id;
-      videos = videos.filter(v => v.id !== id);
-      save();
-      render();
+      videos = videos.filter(x => x.id !== v.id);
+      save(); render();
       showToast('Vidéo supprimée');
     });
+    card.addEventListener('click', () => {
+      if (editMode) return;
+      window.location.href = v.url;
+    });
+    grid.appendChild(card);
   });
-
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.toLowerCase();
-      document.querySelectorAll('.card').forEach(card => {
-        const title = card.querySelector('.card-title').textContent.toLowerCase();
-        card.style.display = title.includes(q) ? '' : 'none';
+ 
+  const si = document.getElementById('searchInput');
+  if (si) {
+    si.addEventListener('input', () => {
+      const q = si.value.toLowerCase();
+      grid.querySelectorAll('.card').forEach(c => {
+        c.style.display = c.querySelector('.card-title').textContent.toLowerCase().includes(q) ? '' : 'none';
       });
     });
   }
-
-  // edit mode
-  const grid = document.getElementById('grid');
-  if (grid && editMode) grid.classList.add('edit-mode');
 };
-
-// ── ADD VIDEO MODAL ──
-const openAdd = () => {
+ 
+const renderPlSelect = () => {
+  const el = document.getElementById('plSelect');
+  el.innerHTML = '';
+  const none = document.createElement('button');
+  none.className = 'pl-chip' + (!selectedPl ? ' selected' : '');
+  none.textContent = 'Sans playlist';
+  none.onclick = () => { selectedPl = null; renderPlSelect(); };
+  el.appendChild(none);
+  playlists.forEach(pl => {
+    const c = document.createElement('button');
+    c.className = 'pl-chip' + (selectedPl === pl ? ' selected' : '');
+    c.textContent = pl;
+    c.onclick = () => { selectedPl = pl; renderPlSelect(); };
+    el.appendChild(c);
+  });
+};
+ 
+document.getElementById('fab').addEventListener('click', () => {
   document.getElementById('linkInput').value = '';
   document.getElementById('titleInput').value = '';
   selectedPl = playlists[0] || null;
   renderPlSelect();
-  document.getElementById('addOverlay').classList.add('open');
-};
-
-const renderPlSelect = () => {
-  const el = document.getElementById('plSelect');
-  el.innerHTML = `<button class="pl-chip ${!selectedPl?'selected':''}" data-pl="">Sans playlist</button>`;
-  playlists.forEach(pl => {
-    el.innerHTML += `<button class="pl-chip ${selectedPl===pl?'selected':''}" data-pl="${pl}">${pl}</button>`;
-  });
-  el.querySelectorAll('.pl-chip').forEach(c => {
-    c.addEventListener('click', () => { selectedPl = c.dataset.pl || null; renderPlSelect(); });
-  });
-};
-
+  openOverlay('addOverlay');
+});
+ 
 document.getElementById('saveBtn').addEventListener('click', () => {
   const url = document.getElementById('linkInput').value.trim();
   if (!url || !url.includes('tiktok')) { showToast('Lien TikTok invalide'); return; }
   const title = document.getElementById('titleInput').value.trim();
-  const v = { id: Date.now().toString(), url, title, playlist: selectedPl, date: Date.now() };
-  videos.unshift(v);
+  videos.unshift({ id: Date.now().toString(), url, title, playlist: selectedPl, date: Date.now() });
   save();
-  document.getElementById('addOverlay').classList.remove('open');
+  closeOverlay('addOverlay');
   render();
   showToast('✅ Vidéo ajoutée');
 });
-
+ 
 document.getElementById('addOverlay').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+  if (e.target === e.currentTarget) closeOverlay('addOverlay');
 });
-
-// ── PLAYLIST MODAL ──
+ 
 const renderPlList = () => {
   const el = document.getElementById('plList');
-  if (playlists.length === 0) { el.innerHTML = '<p style="color:var(--muted);font-size:13px">Aucune playlist</p>'; return; }
-  el.innerHTML = playlists.map(pl => {
+  el.innerHTML = '';
+  if (playlists.length === 0) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:13px">Aucune playlist</p>';
+    return;
+  }
+  playlists.forEach(pl => {
     const count = videos.filter(v => v.playlist === pl).length;
-    return `<div class="pl-item">
-      <div><div class="pl-item-name">${pl}</div><div class="pl-item-count">${count} vidéo${count!==1?'s':''}</div></div>
-      <button class="pl-del" data-pl="${pl}">✕</button>
-    </div>`;
-  }).join('');
-  el.querySelectorAll('.pl-del').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const pl = btn.dataset.pl;
+    const item = document.createElement('div');
+    item.className = 'pl-item';
+    item.innerHTML = `
+      <div><div class="pl-item-name">${pl}</div><div class="pl-item-count">${count} vidéo${count !== 1 ? 's' : ''}</div></div>
+      <button class="pl-del">✕</button>`;
+    item.querySelector('.pl-del').addEventListener('click', () => {
       playlists = playlists.filter(p => p !== pl);
       videos.forEach(v => { if (v.playlist === pl) v.playlist = null; });
       save();
-      renderPlList();
       if (activeTab === pl) activeTab = 'all';
       render();
+      renderPlList();
     });
+    el.appendChild(item);
   });
 };
-
+ 
 document.getElementById('addPlBtn').addEventListener('click', () => {
   const name = document.getElementById('newPlInput').value.trim();
   if (!name) return;
@@ -706,31 +468,28 @@ document.getElementById('addPlBtn').addEventListener('click', () => {
   playlists.push(name);
   save();
   document.getElementById('newPlInput').value = '';
-  renderPlList();
   render();
+  renderPlList();
   showToast(`📂 "${name}" créée`);
 });
-
+ 
 document.getElementById('plOverlay').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+  if (e.target === e.currentTarget) closeOverlay('plOverlay');
 });
-
-// ── BUTTONS ──
-document.getElementById('fab').addEventListener('click', openAdd);
-
+ 
 document.getElementById('editBtn').addEventListener('click', () => {
   editMode = !editMode;
   document.getElementById('editBtn').textContent = editMode ? '✅' : '✏️';
   render();
 });
-
+ 
 document.getElementById('playlistBtn').addEventListener('click', () => {
   renderPlList();
-  document.getElementById('plOverlay').classList.add('open');
+  openOverlay('plOverlay');
 });
-
-// ── INIT ──
+ 
 render();
 </script>
 </body>
 </html>
+ 
